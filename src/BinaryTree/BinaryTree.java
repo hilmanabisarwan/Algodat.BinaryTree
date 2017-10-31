@@ -17,19 +17,67 @@ public class BinaryTree {
     public boolean isEmpty() {
         return (root == null);
     }
+    
+     public void insert(BinaryTreeNode input) {
+        if (isEmpty()) {
+            root = input;
+        } else {
+            BinaryTreeNode current = root;
+            BinaryTreeNode parent = null;
+            boolean diKiri = true;
+                while (current != null) {
+                    parent = current;
+                    if (current.data < input.data) {
+                        current = current.rightChild;
+                        diKiri = false;
+                    } 
+                    else if(current.data > input.data){
+                        current = current.leftChild;
+                        diKiri = true;
+                    }else{
+                        System.out.println("data "+input.data+" sudah ada");
+                        break;
+                    }
+                }
+            if (diKiri) {
+                parent.leftChild = input;
+            }
+            else { 
+                parent.rightChild = input;
+            }
+        }
+    }
+     
+    public BinaryTreeNode search(int key) {
+        BinaryTreeNode node = null;
+        BinaryTreeNode current = root;
+        // lakukan pencarian selama current bukan null
+        while (current != null) {
+            if (current.data == key) {
+                return node;
+            } else {
+                if (current.data < key) {
+                    current = current.rightChild;
+                } else {
+                    current = current.leftChild;
+                }
+            }
+        }
+        return node;
+    } 
 
-    public void preOrder(){
+    public void preOrder() {
         preOrder(root);
     }
-    
-    public void inOrder(){
+
+    public void inOrder() {
         inOrder(root);
     }
-    
-    public void postOrder(){
+
+    public void postOrder() {
         postOrder(root);
     }
-    
+
     public static void visit(BinaryTreeNode t) {
         System.out.print(t.element + " ");
     }
@@ -58,7 +106,7 @@ public class BinaryTree {
         }
     }
 
-    public static void infix(BinaryTreeNode t){
+    public static void infix(BinaryTreeNode t) {
         if (t != null) {
             System.out.print("(");
             infix(t.getLeftChild()); //Output Left Operand
@@ -67,21 +115,35 @@ public class BinaryTree {
             System.out.println(")");
         }
     }
-    
-    public static void leverOrder(BinaryTreeNode t){
-        ArrayQueue q = new ArrayQueue();
-        while (t != null)
-        {
-            visit(t); //Visit Tree t
-            
-            //Put t's Children on Queue
-            if(t.leftChild != null)
-                q.put(t.leftChild);
-            if(t.rightChild != null)
-                q.put(t.rightChild);
-            
-            //Get Next Node to Visit
-            t = (BinaryTreeNode) q.remove();
+
+    public static BinaryTreeNode preOrderClone(BinaryTreeNode t) {
+        if (t != null) {
+            //NonEmpty Tree
+            //Make A Clone of Root
+            BinaryTreeNode ct = new BinaryTreeNode(t.element);
+
+            //Do the Subtrees
+            ct.leftChild = preOrderClone(t.leftChild);    //Clone Left Subtree
+            ct.rightChild = preOrderClone(t.rightChild);  //Clone Right Subtree
+            return ct;
+        } else {
+            return null;
+        }
+    }
+
+    public static BinaryTreeNode postOrderClone(BinaryTreeNode t) {
+        if (t != null) {
+            //NonEmpty Tree
+            //Clone LefT Subtree
+            BinaryTreeNode cLeft = postOrderClone(t.leftChild);
+
+            //Clone Right Subtree
+            BinaryTreeNode cRight = postOrderClone(t.rightChild);
+
+            //Clone Root
+            return new BinaryTreeNode(t.element, cLeft, cRight);
+        } else {
+            return null;
         }
     }
 }

@@ -11,6 +11,7 @@ package BinaryTree;
  */
 public class BinaryTreeNode {
     //Package Visible Data Members
+    int data;
     Object element;
     BinaryTreeNode leftChild; //Left SubTree
     BinaryTreeNode rightChild; //Right SubTree
@@ -19,10 +20,18 @@ public class BinaryTreeNode {
     public BinaryTreeNode() {
     }
     
+    public BinaryTreeNode(int data) {
+        this.data = data;
+    }
+    
     public BinaryTreeNode(Object theElement, BinaryTreeNode theLeftChild, BinaryTreeNode theRightChild) {
         theElement = element;
         theLeftChild = leftChild;
         theRightChild = rightChild;
+    }
+
+    BinaryTreeNode(Object element) {
+        this.element = element;
     }
 
     //Setter & Getter
