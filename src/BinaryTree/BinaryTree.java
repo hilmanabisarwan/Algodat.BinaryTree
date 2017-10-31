@@ -51,7 +51,6 @@ public class BinaryTree {
     public BinaryTreeNode search(int key) {
         BinaryTreeNode node = null;
         BinaryTreeNode current = root;
-        // lakukan pencarian selama current bukan null
         while (current != null) {
             if (current.data == key) {
                 return node;
